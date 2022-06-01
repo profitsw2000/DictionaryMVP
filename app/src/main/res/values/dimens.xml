@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="header_text_view_size">16dp</dimen>
+    <dimen name="translation_text_view_size">12dp</dimen>
+    <dimen name="main_recycler_view_item_margin_start">16dp</dimen>
+    <dimen name="main_recycler_view_item_outer_margin">8dp</dimen>
+    <dimen name="main_recycler_view_item_inner_margin">2dp</dimen>
+</resources>
