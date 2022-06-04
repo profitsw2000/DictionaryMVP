@@ -10,7 +10,11 @@ class RepositoryImpl(
     private val dataSourceLocal: DataSource<List<DataModel>>)
     : Repository<List<DataModel>> {
     override fun getData(word: String, remoteRepository: Boolean): Single<List<DataModel>> {
-        TODO("Not yet implemented")
+        return if(remoteRepository) {
+            dataSourceRemote.getData(word)
+        } else {
+            dataSourceLocal.getData(word)
+        }
     }
 
 }
