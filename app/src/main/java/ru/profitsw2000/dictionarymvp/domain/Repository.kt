@@ -1,7 +1,7 @@
-package ru.profitsw2000.dictionarymvp
+package ru.profitsw2000.dictionarymvp.domain
 
 import io.reactivex.rxjava3.core.Observable
 
-interface Interactor<T> {
+interface Repository<T> {
     fun getData(word: String): Observable<T>
 }

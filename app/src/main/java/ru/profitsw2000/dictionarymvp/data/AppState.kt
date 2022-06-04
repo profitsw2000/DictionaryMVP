@@ -1,6 +1,6 @@
-package ru.profitsw2000.dictionarymvp
+package ru.profitsw2000.dictionarymvp.data
 
-import ru.profitsw2000.dictionarymvp.entities.DataModel
+import ru.profitsw2000.dictionarymvp.data.entities.DataModel
 
 sealed class AppState{
     data class Success(val data: List<DataModel>?) : AppState()

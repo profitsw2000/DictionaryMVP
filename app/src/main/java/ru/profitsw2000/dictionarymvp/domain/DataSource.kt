@@ -1,4 +1,4 @@
-package ru.profitsw2000.dictionarymvp
+package ru.profitsw2000.dictionarymvp.domain
 
 import io.reactivex.rxjava3.core.Observable
 

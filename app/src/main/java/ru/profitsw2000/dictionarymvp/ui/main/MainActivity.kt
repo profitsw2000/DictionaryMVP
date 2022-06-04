@@ -1,7 +1,8 @@
-package ru.profitsw2000.dictionarymvp
+package ru.profitsw2000.dictionarymvp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.profitsw2000.dictionarymvp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
