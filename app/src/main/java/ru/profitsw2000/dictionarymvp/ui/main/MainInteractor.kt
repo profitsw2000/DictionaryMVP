@@ -1,6 +1,5 @@
 package ru.profitsw2000.dictionarymvp.ui.main
 
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.data.entities.DataModel

@@ -8,6 +8,6 @@ import ru.profitsw2000.dictionarymvp.domain.DataSource
 
 class DataSourceLocal : DataSource<List<DataModel>> {
     override fun getData(word: String): Single<List<DataModel>> {
-        return Single.just(arrayListOf(DataModel("test", arrayListOf(Meanings(Translation("тест"))))))
+        return Single.just(arrayListOf(DataModel("test", arrayListOf(Meanings(Translation("тест","no comment"))))))
     }
 }

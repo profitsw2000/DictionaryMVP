@@ -1,17 +1,13 @@
 package ru.profitsw2000.dictionarymvp.ui.main
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.data.RepositoryImpl
 import ru.profitsw2000.dictionarymvp.data.local.DataSourceLocal
 import ru.profitsw2000.dictionarymvp.data.web.DataSourceRemote
-import ru.profitsw2000.dictionarymvp.domain.Interactor
 import ru.profitsw2000.dictionarymvp.ui.base.View
 
 class MainPresenter(private val interactor: MainInteractor = MainInteractor(RepositoryImpl(DataSourceRemote(), DataSourceLocal()))) : Presenter {

@@ -5,13 +5,17 @@ import android.os.Bundle
 import android.widget.Toast
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
+import ru.profitsw2000.dictionarymvp.data.entities.Meanings
+import ru.profitsw2000.dictionarymvp.data.entities.Translation
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
 import ru.profitsw2000.dictionarymvp.ui.base.View
+import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
 
 class MainActivity : AppCompatActivity(), View {
 
     private lateinit var binding: ActivityMainBinding
     private var presenter: MainPresenter? = null
+    private var adapter: TranslationAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +39,43 @@ class MainActivity : AppCompatActivity(), View {
     override fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
+                with(binding) {
+                    translationRecyclerView.visibility = android.view.View.VISIBLE
+                    progressBar.visibility = android.view.View.GONE
+                    errorMessage.visibility = android.view.View.GONE
+                }
                 val dataModel = appState.data
                 if (dataModel == null || dataModel.isEmpty()) {
-                    Toast.makeText(this, "Пусто!", Toast.LENGTH_SHORT).show()
+                    with(binding) {
+                        translationRecyclerView.visibility = android.view.View.GONE
+                        errorMessage.visibility = android.view.View.VISIBLE
+                        progressBar.visibility = android.view.View.GONE
+                        errorMessage.setTextColor(resources.getColor(R.color.blue))
+                        errorMessage.setText("Перевод введенного слова не найден")
+                    }
                 } else {
-                    val translatedWord = dataModel[0].meanings?.get(0)?.translation?.text
-                    Toast.makeText(this, translatedWord, Toast.LENGTH_SHORT).show()
+                    if(adapter == null){
+                        binding.translationRecyclerView.adapter = TranslationAdapter(dataModel[0].meanings!!)
+                    } else {
+                        adapter!!.setData(dataModel[0].meanings!!)
+                    }
                 }
             }
             is AppState.Loading -> {
-                Toast.makeText(this, "Loading!", Toast.LENGTH_SHORT).show()
+                with(binding) {
+                    translationRecyclerView.visibility = android.view.View.GONE
+                    errorMessage.visibility = android.view.View.GONE
+                    progressBar.visibility = android.view.View.VISIBLE
+                }
             }
             is AppState.Error -> {
-                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
+                with(binding) {
+                    translationRecyclerView.visibility = android.view.View.GONE
+                    errorMessage.visibility = android.view.View.VISIBLE
+                    progressBar.visibility = android.view.View.GONE
+                    errorMessage.setTextColor(resources.getColor(R.color.red))
+                    errorMessage.setText(appState.error.message)
+                }
             }
         }
     }
