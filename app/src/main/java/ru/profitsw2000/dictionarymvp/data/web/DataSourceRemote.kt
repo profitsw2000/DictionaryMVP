@@ -20,7 +20,7 @@ class DataSourceRemote : DataSource<List<DataModel>> {
     private val api: ApiService = retrofit.create(ApiService::class.java)
 
     override fun getData(word: String): Single<List<DataModel>> {
-        return Single.just(arrayListOf(DataModel(word, arrayListOf(Meanings(Translation("тест"))))))
-        //return api.search(word)
+        //return Single.just(arrayListOf(DataModel(word, arrayListOf(Meanings(Translation("тест"))))))
+        return api.search(word)
     }
 }

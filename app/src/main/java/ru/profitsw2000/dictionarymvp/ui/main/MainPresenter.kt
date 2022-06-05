@@ -35,6 +35,8 @@ class MainPresenter(private val interactor: MainInteractor = MainInteractor(Repo
         currentView?.renderData(AppState.Loading)
         compositeDisposable.add(
             interactor.getData(word, remoteSource)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy({
                     currentView?.renderData(AppState.Error(it))
                 },{

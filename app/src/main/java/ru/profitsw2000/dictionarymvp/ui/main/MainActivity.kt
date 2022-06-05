@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity(), View {
 
         binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
             val word = binding.searchWordTranslationEditText.text.toString()
-            Toast.makeText(this, "Нажато!", Toast.LENGTH_SHORT).show()
 
             presenter?.getData(word, true)
         }
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity(), View {
                 if (dataModel == null || dataModel.isEmpty()) {
                     Toast.makeText(this, "Пусто!", Toast.LENGTH_SHORT).show()
                 } else {
-                    val translatedWord = dataModel[0].meanings?.get(0)?.translation?.wordTranslation
+                    val translatedWord = dataModel[0].meanings?.get(0)?.translation?.text
                     Toast.makeText(this, translatedWord, Toast.LENGTH_SHORT).show()
                 }
             }
