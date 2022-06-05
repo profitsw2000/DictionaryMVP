@@ -21,7 +21,7 @@ class MainPresenter(private val interactor: MainInteractor = MainInteractor(Repo
 
     override fun onAttach(view: View) {
         if(view != currentView) {
-            currentView = null
+            currentView = view
         }
     }
 
