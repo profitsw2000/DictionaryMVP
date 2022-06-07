@@ -3,6 +3,7 @@ package ru.profitsw2000.dictionarymvp.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.data.entities.Meanings
@@ -11,32 +12,24 @@ import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
 import ru.profitsw2000.dictionarymvp.ui.base.View
 import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
 
-class MainActivity : AppCompatActivity(), View {
+class MainActivity : AppCompatActivity() {
 
+    private val viewModel: MainViewModel by lazy { ViewModelProvider.NewInstanceFactory().create(MainViewModel::class.java) }
     private lateinit var binding: ActivityMainBinding
-    private var presenter: MainPresenter? = null
     private var adapter: TranslationAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = restorePresenter()
-        presenter?.onAttach(this)
 
         binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
             val word = binding.searchWordTranslationEditText.text.toString()
-
-            presenter?.getData(word, true)
+            viewModel.getData(word, true).observe(this@MainActivity) { renderData(it) }
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter?.onDetach(this)
-    }
-
-    override fun renderData(appState: AppState) {
+    private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
                 with(binding) {
@@ -78,14 +71,5 @@ class MainActivity : AppCompatActivity(), View {
                 }
             }
         }
-    }
-
-    private fun restorePresenter(): MainPresenter {
-        val presenter = lastCustomNonConfigurationInstance as? MainPresenter
-        return presenter ?: MainPresenter()
-    }
-
-    override fun onRetainCustomNonConfigurationInstance(): Any? {
-        return presenter
     }
 }

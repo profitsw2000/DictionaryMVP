@@ -16,6 +16,7 @@ class MainViewModel (private val interactor: MainInteractor = MainInteractor(Rep
     private var appState: AppState? = null
 
     override fun getData(word: String, remoteSource: Boolean): LiveData<AppState> {
+        liveData.postValue(AppState.Loading)
         compositeDisposable.add(
             interactor.getData(word, remoteSource)
                 .subscribeOn(Schedulers.io())
