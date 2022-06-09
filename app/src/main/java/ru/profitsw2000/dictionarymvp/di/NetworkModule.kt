@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
     @Provides
-    @Named("api_url")
+    @Named(URL)
     fun provideBaseUrl(): String {
         return "https://dictionary.skyeng.ru/api/public/v1/"
     }
@@ -28,7 +28,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(@Named("api_url") baseUrl: String, converterFactory: Converter.Factory): Retrofit {
+    fun provideRetrofit(@Named(URL) baseUrl: String, converterFactory: Converter.Factory): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
@@ -44,20 +44,23 @@ class NetworkModule {
 
     @Singleton
     @Provides
+    @Named(NAME_REMOTE)
     fun provideRemoteDataSource(apiService: ApiService): DataSourceRemote {
         return DataSourceRemote()
     }
 
     @Singleton
     @Provides
+    @Named(NAME_LOCAL)
     fun provideLocalDataSource(): DataSourceLocal {
         return DataSourceLocal()
     }
 
     @Singleton
     @Provides
-    fun provideRepository(dataSourceRemote: DataSourceRemote,
-                          dataSourceLocal: DataSourceLocal): RepositoryImpl {
+    @Named(NAME_REPO)
+    fun provideRepository(@Named(NAME_REMOTE) dataSourceRemote: DataSourceRemote,
+                          @Named(NAME_LOCAL) dataSourceLocal: DataSourceLocal): RepositoryImpl {
         return RepositoryImpl(dataSourceRemote, dataSourceLocal)
     }
 
