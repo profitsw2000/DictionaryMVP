@@ -45,8 +45,8 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="@dimen/translate_icon_image_view_size"
+        android:layout_height="@dimen/translate_icon_image_view_size"
         android:src="@drawable/arrow_up_left"
         android:layout_marginEnd="@dimen/main_recycler_view_item_outer_margin"
         android:layout_marginTop="@dimen/main_recycler_view_item_outer_margin"

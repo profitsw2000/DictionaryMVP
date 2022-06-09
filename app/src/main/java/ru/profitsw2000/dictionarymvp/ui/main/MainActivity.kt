@@ -44,13 +44,13 @@ class MainActivity : AppCompatActivity() {
                         errorMessage.visibility = android.view.View.VISIBLE
                         progressBar.visibility = android.view.View.GONE
                         errorMessage.setTextColor(resources.getColor(R.color.blue))
-                        errorMessage.setText("Перевод введенного слова не найден")
+                        errorMessage.setText(getString(R.string.no_translation_found_message_text))
                     }
                 } else {
                     if(adapter == null){
-                        binding.translationRecyclerView.adapter = TranslationAdapter(dataModel[0].meanings!!)
+                        binding.translationRecyclerView.adapter = dataModel[0].meanings?.let {TranslationAdapter(it)}
                     } else {
-                        adapter!!.setData(dataModel[0].meanings!!)
+                        dataModel[0].meanings?.let { adapter!!.setData(it) }
                     }
                 }
             }

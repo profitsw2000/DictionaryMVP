@@ -7,11 +7,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.profitsw2000.dictionarymvp.data.entities.DataModel
 import ru.profitsw2000.dictionarymvp.domain.DataSource
 
+const val api_url = "https://dictionary.skyeng.ru/api/public/v1/"
+
 class DataSourceRemote : DataSource<List<DataModel>> {
 
     //retrofit
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://dictionary.skyeng.ru/api/public/v1/")
+        .baseUrl(api_url)
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
