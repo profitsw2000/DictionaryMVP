@@ -10,8 +10,9 @@ import ru.profitsw2000.dictionarymvp.data.local.DataSourceLocal
 import ru.profitsw2000.dictionarymvp.data.web.ApiService
 import ru.profitsw2000.dictionarymvp.data.web.DataSourceRemote
 import ru.profitsw2000.dictionarymvp.domain.BaseViewModel
+import javax.inject.Inject
 
-class MainViewModel (private val interactor: MainInteractor ) : BaseViewModel<AppState>() {
+class MainViewModel @Inject constructor (private val interactor: MainInteractor ) : BaseViewModel<AppState>() {
     private var appState: AppState? = null
 
     override fun getData(word: String, remoteSource: Boolean): LiveData<AppState> {

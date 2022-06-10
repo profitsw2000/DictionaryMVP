@@ -3,6 +3,7 @@ package ru.profitsw2000.dictionarymvp.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
@@ -12,12 +13,16 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject
+/*    @Inject
     lateinit var interactor: MainInteractor
 
     private val viewModel: MainViewModel by viewModels {
         ViewModelFactory(interactor)
-    }
+    }*/
+
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModel: MainViewModel
 
     private lateinit var binding: ActivityMainBinding
     private var adapter: TranslationAdapter? = null
@@ -27,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         AndroidInjection.inject(this)
+        viewModel = viewModelFactory.create(MainViewModel::class.java)
 
         binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
             val word = binding.searchWordTranslationEditText.text.toString()
