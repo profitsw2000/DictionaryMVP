@@ -1,6 +1,24 @@
 package ru.profitsw2000.dictionarymvp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
+import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
+import dagger.android.AndroidInjection
+import ru.profitsw2000.dictionarymvp.R
+import ru.profitsw2000.dictionarymvp.data.AppState
+import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
+import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
+import javax.inject.Inject
+
+class MainActivity : AppCompatActivity() {
+
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModel: MainViewModel
+
+    private lateinit var binding: ActivityMainBinding
+=======
 import android.os.Bundle
 import android.widget.Toast
 import ru.profitsw2000.dictionarymvp.R
@@ -21,6 +39,17 @@ class MainActivity : AppCompatActivity(), View {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AndroidInjection.inject(this)
+        viewModel = viewModelFactory.create(MainViewModel::class.java)
+
+        binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
+            val word = binding.searchWordTranslationEditText.text.toString()
+            viewModel.getData(word, true).observe(this@MainActivity) { renderData(it) }
+        }
+    }
+
+    private fun renderData(appState: AppState) {
+=======
         presenter = restorePresenter()
         presenter?.onAttach(this)
 
@@ -51,6 +80,14 @@ class MainActivity : AppCompatActivity(), View {
                         errorMessage.visibility = android.view.View.VISIBLE
                         progressBar.visibility = android.view.View.GONE
                         errorMessage.setTextColor(resources.getColor(R.color.blue))
+                        errorMessage.setText(getString(R.string.no_translation_found_message_text))
+                    }
+                } else {
+                    if(adapter == null){
+                        binding.translationRecyclerView.adapter = dataModel[0].meanings?.let {TranslationAdapter(it)}
+                    } else {
+                        dataModel[0].meanings?.let { adapter!!.setData(it) }
+=======
                         errorMessage.setText("Перевод введенного слова не найден")
                     }
                 } else {
@@ -79,6 +116,7 @@ class MainActivity : AppCompatActivity(), View {
             }
         }
     }
+=======
 
     private fun restorePresenter(): MainPresenter {
         val presenter = lastCustomNonConfigurationInstance as? MainPresenter
