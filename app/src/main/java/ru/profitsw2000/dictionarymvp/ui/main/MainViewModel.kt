@@ -7,12 +7,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.data.RepositoryImpl
 import ru.profitsw2000.dictionarymvp.data.local.DataSourceLocal
+import ru.profitsw2000.dictionarymvp.data.web.ApiService
 import ru.profitsw2000.dictionarymvp.data.web.DataSourceRemote
 import ru.profitsw2000.dictionarymvp.domain.BaseViewModel
 
-class MainViewModel (private val interactor: MainInteractor = MainInteractor(RepositoryImpl(
-    DataSourceRemote(), DataSourceLocal()
-))) : BaseViewModel<AppState>() {
+class MainViewModel (private val interactor: MainInteractor ) : BaseViewModel<AppState>() {
     private var appState: AppState? = null
 
     override fun getData(word: String, remoteSource: Boolean): LiveData<AppState> {

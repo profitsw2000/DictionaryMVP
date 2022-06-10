@@ -1,20 +1,24 @@
 package ru.profitsw2000.dictionarymvp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import android.os.Bundle
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import dagger.android.AndroidInjection
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
-import ru.profitsw2000.dictionarymvp.data.entities.Meanings
-import ru.profitsw2000.dictionarymvp.data.entities.Translation
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
-import ru.profitsw2000.dictionarymvp.ui.base.View
 import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by lazy { ViewModelProvider.NewInstanceFactory().create(MainViewModel::class.java) }
+    @Inject
+    lateinit var interactor: MainInteractor
+
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory(interactor)
+    }
+
     private lateinit var binding: ActivityMainBinding
     private var adapter: TranslationAdapter? = null
 
@@ -22,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AndroidInjection.inject(this)
 
         binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
             val word = binding.searchWordTranslationEditText.text.toString()

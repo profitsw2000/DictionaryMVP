@@ -46,7 +46,7 @@ class NetworkModule {
     @Provides
     @Named(NAME_REMOTE)
     fun provideRemoteDataSource(apiService: ApiService): DataSourceRemote {
-        return DataSourceRemote()
+        return DataSourceRemote(apiService)
     }
 
     @Singleton
