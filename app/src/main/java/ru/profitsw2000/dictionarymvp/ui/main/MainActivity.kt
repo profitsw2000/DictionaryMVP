@@ -13,13 +13,6 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-/*    @Inject
-    lateinit var interactor: MainInteractor
-
-    private val viewModel: MainViewModel by viewModels {
-        ViewModelFactory(interactor)
-    }*/
-
     @Inject
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var viewModel: MainViewModel
