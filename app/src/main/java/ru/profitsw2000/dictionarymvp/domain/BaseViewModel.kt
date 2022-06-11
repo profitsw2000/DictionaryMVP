@@ -1,6 +1,5 @@
 package ru.profitsw2000.dictionarymvp.domain
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*

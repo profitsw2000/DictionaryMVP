@@ -1,6 +1,5 @@
 package ru.profitsw2000.dictionarymvp.data
 
-import io.reactivex.rxjava3.core.Single
 import ru.profitsw2000.dictionarymvp.data.entities.DataModel
 import ru.profitsw2000.dictionarymvp.data.local.DataSourceLocal
 import ru.profitsw2000.dictionarymvp.data.web.DataSourceRemote
