@@ -2,7 +2,6 @@ package ru.profitsw2000.dictionarymvp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import dagger.android.AndroidInjection
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
@@ -11,9 +10,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-/*    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var viewModel: MainViewModel*/
 
     private val viewModel: MainViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
@@ -23,8 +19,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-/*        AndroidInjection.inject(this)
-        viewModel = viewModelFactory.create(MainViewModel::class.java)*/
 
         binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
             val word = binding.searchWordTranslationEditText.text.toString()
