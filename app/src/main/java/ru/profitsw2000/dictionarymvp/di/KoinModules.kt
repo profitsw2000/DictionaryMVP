@@ -1,5 +1,6 @@
 package ru.profitsw2000.dictionarymvp.di
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Converter
@@ -22,7 +23,7 @@ val webModule = module {
     single<String>(named(URL)) { "https://dictionary.skyeng.ru/api/public/v1/" }
     single { Retrofit.Builder()
         .baseUrl(get<String>(named(URL)))
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(get())
         .build() }
     single<ApiService> { get<Retrofit>().create(ApiService::class.java) }

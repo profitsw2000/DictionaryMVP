@@ -3,16 +3,27 @@ package ru.profitsw2000.dictionarymvp.domain
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.*
 import ru.profitsw2000.dictionarymvp.data.AppState
 
 abstract class BaseViewModel<T : AppState>(
-    protected val liveData: MutableLiveData<T> = MutableLiveData(),
-    protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    protected val liveData: MutableLiveData<T> = MutableLiveData()
 ) : ViewModel() {
-    open fun getData(word: String, remoteSource: Boolean): LiveData<T> = liveData
+
+    protected val viewModelCoroutineScope = CoroutineScope(
+        Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler{ _, throwable -> handleError(throwable)}
+    )
+
+    abstract fun getData(word: String, remoteSource: Boolean)
+
+    abstract fun handleError(error: Throwable)
 
     override fun onCleared() {
-        compositeDisposable.clear()
+        super.onCleared()
+        cancelJob()
+    }
+
+    protected fun cancelJob() {
+        viewModelCoroutineScope.coroutineContext.cancelChildren()
     }
 }

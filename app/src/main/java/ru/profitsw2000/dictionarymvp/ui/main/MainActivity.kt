@@ -19,10 +19,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel.subscribe().observe(this@MainActivity) { renderData(it) }
 
         binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
             val word = binding.searchWordTranslationEditText.text.toString()
-            viewModel.getData(word, true).observe(this@MainActivity) { renderData(it) }
+            viewModel.getData(word, true)
         }
     }
 
