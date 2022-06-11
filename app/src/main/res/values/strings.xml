@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DictionaryMVP</string>
+    <string name="no_translation_found_message_text">Перевод введенного слова не найден</string>
 </resources>
