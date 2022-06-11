@@ -7,7 +7,7 @@ import ru.profitsw2000.dictionarymvp.domain.Interactor
 import ru.profitsw2000.dictionarymvp.domain.Repository
 
 class MainInteractor(val repository: Repository<List<DataModel>>) : Interactor<AppState> {
-    override fun getData(word: String, remoteSource: Boolean): Single<AppState> {
-        return repository.getData(word, remoteSource).map { AppState.Success(it) }
+    override suspend fun getData(word: String, remoteSource: Boolean): AppState {
+        return AppState.Success(repository.getData(word, remoteSource))
     }
 }
