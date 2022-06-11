@@ -21,5 +21,18 @@ class DataSourceRemote(private val apiService: ApiService) : DataSource<List<Dat
 
     override fun getData(word: String): Single<List<DataModel>> {
         return apiService.search(word)
+=======
+class DataSourceRemote : DataSource<List<DataModel>> {
+
+    //retrofit
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://dictionary.skyeng.ru/api/public/v1/")
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    private val api: ApiService = retrofit.create(ApiService::class.java)
+
+    override fun getData(word: String): Single<List<DataModel>> {
+        return api.search(word)
     }
 }

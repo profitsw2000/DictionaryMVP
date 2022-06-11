@@ -10,6 +10,11 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class MainInteractor @Inject constructor (@Named(NAME_REPO) val repository: Repository<List<DataModel>>) : Interactor<AppState> {
+=======
+import ru.profitsw2000.dictionarymvp.domain.Interactor
+import ru.profitsw2000.dictionarymvp.domain.Repository
+
+class MainInteractor (private val repository: Repository<List<DataModel>>) : Interactor<AppState> {
     override fun getData(word: String, remoteSource: Boolean): Single<AppState> {
         return repository.getData(word, remoteSource).map { AppState.Success(it) }
     }
