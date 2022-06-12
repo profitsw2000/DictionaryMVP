@@ -48,7 +48,11 @@ class MainActivity : AppCompatActivity() {
                     if(adapter == null){
                         binding.translationRecyclerView.adapter = dataModel[0].meanings?.let {TranslationAdapter(it)}
                     } else {
-                        dataModel[0].meanings?.let { adapter!!.setData(it) }
+                        dataModel[0].meanings?.let {
+                            with(adapter) {
+                                this?.setData(it)
+                            }
+                        }
                     }
                 }
             }
