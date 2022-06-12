@@ -1,6 +1,8 @@
 package ru.profitsw2000.dictionarymvp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+=======
 import androidx.activity.viewModels
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +11,14 @@ import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
 import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
+class MainActivity : AppCompatActivity() {
+
+
+    private val viewModel: MainViewModel by viewModel()
+    private lateinit var binding: ActivityMainBinding
+=======
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +49,12 @@ class MainActivity : AppCompatActivity(), View {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel.subscribe().observe(this@MainActivity) { renderData(it) }
+
+        binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
+            val word = binding.searchWordTranslationEditText.text.toString()
+            viewModel.getData(word, true)
+=======
         AndroidInjection.inject(this)
         viewModel = viewModelFactory.create(MainViewModel::class.java)
 
@@ -49,6 +65,7 @@ class MainActivity : AppCompatActivity(), View {
     }
 
     private fun renderData(appState: AppState) {
+=======
 =======
         presenter = restorePresenter()
         presenter?.onAttach(this)
@@ -86,6 +103,12 @@ class MainActivity : AppCompatActivity(), View {
                     if(adapter == null){
                         binding.translationRecyclerView.adapter = dataModel[0].meanings?.let {TranslationAdapter(it)}
                     } else {
+                        dataModel[0].meanings?.let {
+                            with(adapter) {
+                                this?.setData(it)
+                            }
+                        }
+=======
                         dataModel[0].meanings?.let { adapter!!.setData(it) }
 =======
                         errorMessage.setText("Перевод введенного слова не найден")
@@ -116,6 +139,7 @@ class MainActivity : AppCompatActivity(), View {
             }
         }
     }
+=======
 =======
 
     private fun restorePresenter(): MainPresenter {
