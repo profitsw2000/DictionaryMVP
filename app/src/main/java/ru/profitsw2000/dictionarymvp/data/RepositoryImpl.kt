@@ -15,7 +15,7 @@ class RepositoryImpl(
             modelList = dataSourceRemote.getData(word)
             dataSourceLocal.saveToDB(word, modelList)
         } else {
-            modelList = dataSourceLocal.getData(word)
+            modelList = dataSourceLocal.getData()
         }
         return modelList
     }

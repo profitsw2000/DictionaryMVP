@@ -2,7 +2,6 @@ package ru.profitsw2000.dictionarymvp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding

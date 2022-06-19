@@ -14,6 +14,7 @@ import ru.profitsw2000.dictionarymvp.data.web.ApiService
 import ru.profitsw2000.dictionarymvp.data.web.DataSourceRemote
 import ru.profitsw2000.dictionarymvp.domain.Repository
 import ru.profitsw2000.dictionarymvp.room.HistoryDataBase
+import ru.profitsw2000.dictionarymvp.ui.history.HistoryViewModel
 import ru.profitsw2000.dictionarymvp.ui.main.MainInteractor
 import ru.profitsw2000.dictionarymvp.ui.main.MainViewModel
 
@@ -37,4 +38,5 @@ val webModule = module {
 val localdbModule = module {
     single { Room.databaseBuilder(get(), HistoryDataBase::class.java, "HistoryDB").build() }
     single { get<HistoryDataBase>().historyDao() }
+    factory { HistoryViewModel(get()) }
 }

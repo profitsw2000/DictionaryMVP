@@ -4,7 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import ru.profitsw2000.dictionarymvp.di.appModule
+import ru.profitsw2000.dictionarymvp.di.localdbModule
 import ru.profitsw2000.dictionarymvp.di.webModule
 
 class App : Application() {
@@ -15,7 +15,7 @@ class App : Application() {
         startKoin{
             androidLogger()
             androidContext(this@App)
-            modules(listOf(webModule, appModule))
+            modules(listOf(webModule, localdbModule))
         }
     }
 }
