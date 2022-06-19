@@ -10,11 +10,13 @@ class RepositoryImpl(
     private val dataSourceLocal: DataSourceLocal)
     : Repository<List<DataModel>> {
     override suspend fun getData(word: String, remoteRepository: Boolean): List<DataModel> {
-        return if(remoteRepository) {
-            dataSourceRemote.getData(word)
+        val modelList: List<DataModel>
+        if(remoteRepository) {
+            modelList = dataSourceRemote.getData(word)
+            dataSourceLocal.saveToDB(word, modelList)
         } else {
-            dataSourceLocal.getData(word)
+            modelList = dataSourceLocal.getData(word)
         }
+        return modelList
     }
-
 }

@@ -1,5 +1,6 @@
 package ru.profitsw2000.dictionarymvp.di
 
+import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -12,6 +13,7 @@ import ru.profitsw2000.dictionarymvp.data.local.DataSourceLocal
 import ru.profitsw2000.dictionarymvp.data.web.ApiService
 import ru.profitsw2000.dictionarymvp.data.web.DataSourceRemote
 import ru.profitsw2000.dictionarymvp.domain.Repository
+import ru.profitsw2000.dictionarymvp.room.HistoryDataBase
 import ru.profitsw2000.dictionarymvp.ui.main.MainInteractor
 import ru.profitsw2000.dictionarymvp.ui.main.MainViewModel
 
@@ -24,7 +26,7 @@ val webModule = module {
         .build() }
     single<ApiService> { get<Retrofit>().create(ApiService::class.java) }
     single<DataSourceRemote>(named(NAME_REMOTE)) { DataSourceRemote(get()) }
-    single<DataSourceLocal>(named(NAME_LOCAL)) { DataSourceLocal() }
+    single<DataSourceLocal>(named(NAME_LOCAL)) { DataSourceLocal(get()) }
     single<Repository<List<DataModel>>>(named(NAME_REPO)) { RepositoryImpl(get(named(NAME_REMOTE)), get(named(NAME_LOCAL))) }
 
     factory { MainInteractor(get(named(NAME_REPO))) }
@@ -32,5 +34,7 @@ val webModule = module {
     factory { MainViewModel(get()) }
 }
 
-val appModule = module {
+val localdbModule = module {
+    single { Room.databaseBuilder(get(), HistoryDataBase::class.java, "HistoryDB").build() }
+    single { get<HistoryDataBase>().historyDao() }
 }
