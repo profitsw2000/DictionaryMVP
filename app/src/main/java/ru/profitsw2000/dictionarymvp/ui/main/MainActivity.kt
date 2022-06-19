@@ -1,7 +1,10 @@
 package ru.profitsw2000.dictionarymvp.ui.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
@@ -9,6 +12,7 @@ import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.profitsw2000.dictionarymvp.data.entities.Meanings
 import ru.profitsw2000.dictionarymvp.ui.description.DescriptionActivity
+import ru.profitsw2000.dictionarymvp.ui.history.HistoryActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +44,21 @@ class MainActivity : AppCompatActivity() {
         binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
             val word = binding.searchWordTranslationEditText.text.toString()
             viewModel.getData(word, true)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
