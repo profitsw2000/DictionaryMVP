@@ -7,6 +7,6 @@ import ru.profitsw2000.dictionarymvp.domain.DataSource
 
 class DataSourceLocal : DataSource<List<DataModel>> {
     override suspend fun getData(word: String): List<DataModel> {
-        return arrayListOf(DataModel("test", arrayListOf(Meanings(Translation("тест","no comment")))))
+        return arrayListOf(DataModel("test", arrayListOf(Meanings(Translation("тест","no comment"),"www"))))
     }
 }

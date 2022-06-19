@@ -9,6 +9,7 @@ import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
 import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.profitsw2000.dictionarymvp.data.entities.Meanings
+import ru.profitsw2000.dictionarymvp.ui.description.DescriptionActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,9 +20,16 @@ class MainActivity : AppCompatActivity() {
     private val onItemClickListener: TranslationAdapter.OnItemClickListener =
         object : TranslationAdapter.OnItemClickListener {
             override fun onItemClick(meanings: Meanings) {
-                Toast.makeText(this@MainActivity, meanings.translation?.text, Toast.LENGTH_SHORT).show()
-            }
+                val text = if (meanings.translation?.text.isNullOrEmpty()) "" else meanings.translation?.text
+                val note = if (meanings.translation?.note.isNullOrEmpty()) "" else meanings.translation?.note
+                val url = if (meanings.imageUrl.isNullOrEmpty()) "" else meanings.imageUrl
 
+                startActivity(text?.let {
+                    note?.let { it1 ->
+                        DescriptionActivity.getIntent(this@MainActivity, it, it1, url)
+                    }
+                })
+            }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
