@@ -16,13 +16,22 @@ fun convertDataModelToEntity(word: String, dataModel: DataModel): HistoryEntity?
     }
 }
 
-fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<DataModel> {
+fun mapHistoryEntityListToSearchResult(list: List<HistoryEntity>): List<DataModel> {
     val searchResult = ArrayList<DataModel>()
     if (!list.isNullOrEmpty()) {
         for (entity in list) {
             searchResult.add(DataModel(entity.word,
                 meanings = arrayListOf(Meanings(Translation(entity.translation, entity.note), null))))
         }
+    }
+    return searchResult
+}
+
+fun mapHistoryEntityToSearchResult(historyEntity: HistoryEntity): List<DataModel> {
+    val searchResult = ArrayList<DataModel>()
+    if (historyEntity != null) {
+            searchResult.add(DataModel(historyEntity.word,
+                meanings = arrayListOf(Meanings(Translation(historyEntity.translation, historyEntity.note), null))))
     }
     return searchResult
 }

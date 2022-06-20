@@ -9,4 +9,8 @@ class MainInteractor(val repository: Repository<List<DataModel>>) : Interactor<A
     override suspend fun getData(word: String, remoteSource: Boolean): AppState {
         return AppState.Success(repository.getData(word, remoteSource))
     }
+
+    override suspend fun getHistoryDataByWord(word: String): AppState {
+        return AppState.Success(repository.getHistoryDataByWord(word))
+    }
 }

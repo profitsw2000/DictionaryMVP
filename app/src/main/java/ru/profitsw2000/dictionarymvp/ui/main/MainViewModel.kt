@@ -19,6 +19,16 @@ class MainViewModel(private val interactor: MainInteractor ) : BaseViewModel<App
         viewModelCoroutineScope.launch { startAsyncSearch(word, remoteSource) }
     }
 
+    fun getHistoryDataByWord(word: String) {
+        liveData.postValue(AppState.Loading)
+        cancelJob()
+        viewModelCoroutineScope.launch { startAsyncSearchInHistory(word) }
+    }
+
+    private suspend fun startAsyncSearchInHistory(word: String) = withContext(Dispatchers.IO) {
+        liveData.postValue(interactor.getHistoryDataByWord(word))
+    }
+
     private suspend fun startAsyncSearch(word: String, remoteSource: Boolean) = withContext(Dispatchers.IO) {
         liveData.postValue(interactor.getData(word, remoteSource))
     }

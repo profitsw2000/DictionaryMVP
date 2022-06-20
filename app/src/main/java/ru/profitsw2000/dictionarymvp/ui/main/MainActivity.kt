@@ -77,7 +77,8 @@ class MainActivity : AppCompatActivity() {
     private val onSearchClickListener: SearchWordInHistoryDialog.OnSearchClickListener =
         object : SearchWordInHistoryDialog.OnSearchClickListener {
             override fun onClick(searchWord: String) {
-                Toast.makeText(this@MainActivity, searchWord, Toast.LENGTH_SHORT).show()
+                viewModel.getHistoryDataByWord(searchWord)
+                //Toast.makeText(this@MainActivity, searchWord, Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -19,4 +19,8 @@ class RepositoryImpl(
         }
         return modelList
     }
+
+    override suspend fun getHistoryDataByWord(word: String): List<DataModel> {
+        return dataSourceLocal.getData(word)
+    }
 }
