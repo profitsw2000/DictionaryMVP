@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
@@ -13,6 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.profitsw2000.dictionarymvp.data.entities.Meanings
 import ru.profitsw2000.dictionarymvp.ui.description.DescriptionActivity
 import ru.profitsw2000.dictionarymvp.ui.history.HistoryActivity
+import ru.profitsw2000.dictionarymvp.ui.history.dialog.SearchWordInHistoryDialog
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,9 +60,26 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, HistoryActivity::class.java))
                 true
             }
+            R.id.menu_search_word_in_history -> {
+                startSearchWordInHistoryDialog()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun startSearchWordInHistoryDialog() {
+        val searchWordInHistoryDialog = SearchWordInHistoryDialog.newInstance()
+        searchWordInHistoryDialog.setOnSearchClickListener(onSearchClickListener)
+        searchWordInHistoryDialog.show(supportFragmentManager, "NewDialog")
+    }
+
+    private val onSearchClickListener: SearchWordInHistoryDialog.OnSearchClickListener =
+        object : SearchWordInHistoryDialog.OnSearchClickListener {
+            override fun onClick(searchWord: String) {
+                Toast.makeText(this@MainActivity, searchWord, Toast.LENGTH_SHORT).show()
+            }
+        }
 
     private fun renderData(appState: AppState) {
         when (appState) {

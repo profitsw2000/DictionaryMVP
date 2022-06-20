@@ -6,4 +6,10 @@
         android:title="History"
         android:icon="@drawable/ic_history"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_search_word_in_history"
+        android:title="Search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"/>
 </menu>

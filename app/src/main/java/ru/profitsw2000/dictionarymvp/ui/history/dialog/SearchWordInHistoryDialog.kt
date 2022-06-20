@@ -44,6 +44,10 @@ class SearchWordInHistoryDialog(): DialogFragment() {
         super.onDestroyView()
     }
 
+    internal fun setOnSearchClickListener(listener: OnSearchClickListener) {
+        onSearchClickListener = listener
+    }
+
     interface OnSearchClickListener {
         fun onClick(searchWord: String)
     }

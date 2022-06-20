@@ -7,14 +7,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:padding="@dimen/padding_medium"
     android:layout_margin="@dimen/margin_medium">
 
     <TextView
         android:id="@+id/search_word_message_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_margin="@dimen/margin_medium"
         android:text="Введите слово для поиска в истории переводов"
         android:layout_gravity="center_horizontal"/>
 
