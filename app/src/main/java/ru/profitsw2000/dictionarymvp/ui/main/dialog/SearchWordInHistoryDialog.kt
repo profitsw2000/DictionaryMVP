@@ -1,4 +1,4 @@
-package ru.profitsw2000.dictionarymvp.ui.history.dialog
+package ru.profitsw2000.dictionarymvp.ui.main.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

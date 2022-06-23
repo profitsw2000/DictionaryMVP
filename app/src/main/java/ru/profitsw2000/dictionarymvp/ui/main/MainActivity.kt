@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import ru.profitsw2000.dictionarymvp.R
-import ru.profitsw2000.model.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
 import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.profitsw2000.model.entities.Meanings
 import ru.profitsw2000.dictionarymvp.ui.description.DescriptionActivity
 import ru.profitsw2000.dictionarymvp.ui.history.HistoryActivity
-import ru.profitsw2000.dictionarymvp.ui.history.dialog.SearchWordInHistoryDialog
+import ru.profitsw2000.dictionarymvp.ui.main.dialog.SearchWordInHistoryDialog
 
 class MainActivity : AppCompatActivity() {
 
