@@ -1,4 +1,4 @@
-package ru.profitsw2000.dictionarymvp.ui.history
+package ru.profitsw2000.historyscreen
 
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers

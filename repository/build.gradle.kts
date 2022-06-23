@@ -39,7 +39,6 @@ dependencies {
 
     implementation(project(Modules.model))
     implementation(project(Modules.core))
-    //implementation(project(Modules.utils))
 
     // Retrofit
     implementation(Retrofit.retrofit)
@@ -59,16 +58,16 @@ dependencies {
     implementation(Kotlin.activity)
     implementation(Kotlin.core)
 
+    //Room
+    implementation(Room.runtime)
+    kapt(Room.room_compiler)
+    implementation(Room.room_ktx)
+
     //Design
     implementation(Design.swiperefreshlayout)
     implementation(Design.appcompat)
     implementation(Design.material)
     implementation(Design.constraintlayout)
-
-    //Room
-    implementation(Room.runtime)
-    kapt(Room.room_compiler)
-    implementation(Room.room_ktx)
 
     //Test
     testImplementation(TestImpl.junit)

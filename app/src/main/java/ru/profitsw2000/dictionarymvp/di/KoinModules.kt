@@ -13,8 +13,8 @@ import ru.profitsw2000.repository.data.local.DataSourceLocal
 import ru.profitsw2000.repository.data.web.ApiService
 import ru.profitsw2000.repository.data.web.DataSourceRemote
 import ru.profitsw2000.repository.domain.Repository
-import ru.profitsw2000.dictionarymvp.ui.history.HistoryViewModel
 import ru.profitsw2000.dictionarymvp.ui.main.MainViewModel
+import ru.profitsw2000.historyscreen.HistoryViewModel
 import ru.profitsw2000.repository.room.HistoryDataBase
 
 val webModule = module {

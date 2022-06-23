@@ -1,11 +1,10 @@
-package ru.profitsw2000.dictionarymvp.ui.history
+package ru.profitsw2000.historyscreen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.profitsw2000.dictionarymvp.R
-import ru.profitsw2000.dictionarymvp.databinding.ActivityHistoryBinding
-import ru.profitsw2000.dictionarymvp.ui.history.adapter.HistoryAdapter
+import ru.profitsw2000.historyscreen.adapter.HistoryAdapter
+import ru.profitsw2000.historyscreen.databinding.ActivityHistoryBinding
 import ru.profitsw2000.model.AppState
 
 class HistoryActivity : AppCompatActivity() {

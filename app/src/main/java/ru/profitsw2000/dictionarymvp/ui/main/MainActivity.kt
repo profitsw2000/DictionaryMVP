@@ -11,7 +11,7 @@ import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.profitsw2000.model.entities.Meanings
 import ru.profitsw2000.dictionarymvp.ui.description.DescriptionActivity
-import ru.profitsw2000.dictionarymvp.ui.history.HistoryActivity
+import ru.profitsw2000.historyscreen.HistoryActivity
 import ru.profitsw2000.dictionarymvp.ui.main.dialog.SearchWordInHistoryDialog
 
 class MainActivity : AppCompatActivity() {
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_history -> {
-                startActivity(Intent(this, HistoryActivity::class.java))
+                startActivity(Intent(this, ru.profitsw2000.historyscreen.HistoryActivity::class.java))
                 true
             }
             R.id.menu_search_word_in_history -> {

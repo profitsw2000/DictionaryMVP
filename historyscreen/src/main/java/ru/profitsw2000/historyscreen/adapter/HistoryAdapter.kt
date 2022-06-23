@@ -1,11 +1,11 @@
-package ru.profitsw2000.dictionarymvp.ui.history.adapter
+package ru.profitsw2000.historyscreen.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.profitsw2000.model.entities.DataModel
-import ru.profitsw2000.dictionarymvp.databinding.HistoryRecyclerViewItemViewBinding
+import ru.profitsw2000.historyscreen.databinding.HistoryRecyclerViewItemViewBinding
 
 class HistoryAdapter (private var data: List<DataModel>) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
@@ -15,7 +15,7 @@ class HistoryAdapter (private var data: List<DataModel>) : RecyclerView.Adapter<
         this.data = data
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding = HistoryRecyclerViewItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding.root)
     }
