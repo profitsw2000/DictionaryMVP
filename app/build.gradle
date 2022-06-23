@@ -41,10 +41,10 @@ dependencies {
     implementation(project(Modules.utils))
     implementation(project(Modules.repository))
 
-    // Retrofit
+/*    // Retrofit
     implementation Retrofit.retrofit
     implementation Retrofit.converter_gson
-    implementation Retrofit.coroutinesAdapter
+    implementation Retrofit.coroutinesAdapter*/
 
     //Koin
     implementation Koin.koin_core
@@ -64,11 +64,11 @@ dependencies {
 
     //Coil
     implementation Coil.coil
-
+/*
     //Room
     implementation Room.runtime
     kapt Room.room_compiler
-    implementation Room.room_ktx
+    implementation Room.room_ktx*/
 
     //Kotlin
     implementation Kotlin.activity

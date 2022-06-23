@@ -5,23 +5,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.profitsw2000.core.BaseViewModel
+import ru.profitsw2000.model.AppState
+import ru.profitsw2000.repository.MainInteractor
 
-class MainViewModel(private val interactor: ru.profitsw2000.repository.MainInteractor) : BaseViewModel<ru.profitsw2000.model.AppState>() {
+class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<AppState>() {
 
-    private val liveData: LiveData<ru.profitsw2000.model.AppState> = _mutableliveData
+    private val liveData: LiveData<AppState> = _mutableliveData
 
-    fun subscribe(): LiveData<ru.profitsw2000.model.AppState> {
+    fun subscribe(): LiveData<AppState> {
         return liveData
     }
 
     override fun getData(word: String, remoteSource: Boolean) {
-        _mutableliveData.value = ru.profitsw2000.model.AppState.Loading
+        _mutableliveData.value = AppState.Loading
         cancelJob()
         viewModelCoroutineScope.launch { startAsyncSearch(word, remoteSource) }
     }
 
     fun getHistoryDataByWord(word: String) {
-        _mutableliveData.postValue(ru.profitsw2000.model.AppState.Loading)
+        _mutableliveData.postValue(AppState.Loading)
         cancelJob()
         viewModelCoroutineScope.launch { startAsyncSearchInHistory(word) }
     }
@@ -35,6 +37,6 @@ class MainViewModel(private val interactor: ru.profitsw2000.repository.MainInter
     }
 
     override fun handleError(error: Throwable) {
-        _mutableliveData.postValue(ru.profitsw2000.model.AppState.Error(error))
+        _mutableliveData.postValue(AppState.Error(error))
     }
 }
