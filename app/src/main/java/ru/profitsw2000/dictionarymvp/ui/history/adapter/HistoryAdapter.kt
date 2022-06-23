@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.profitsw2000.dictionarymvp.data.entities.DataModel
+import ru.profitsw2000.model.entities.DataModel
 import ru.profitsw2000.dictionarymvp.databinding.HistoryRecyclerViewItemViewBinding
 
 class HistoryAdapter (private var data: List<DataModel>) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {

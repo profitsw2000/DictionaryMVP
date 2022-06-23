@@ -7,16 +7,15 @@ import org.koin.dsl.module
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.profitsw2000.dictionarymvp.data.RepositoryImpl
-import ru.profitsw2000.dictionarymvp.data.entities.DataModel
-import ru.profitsw2000.dictionarymvp.data.local.DataSourceLocal
-import ru.profitsw2000.dictionarymvp.data.web.ApiService
-import ru.profitsw2000.dictionarymvp.data.web.DataSourceRemote
-import ru.profitsw2000.dictionarymvp.domain.Repository
-import ru.profitsw2000.dictionarymvp.room.HistoryDataBase
+import ru.profitsw2000.repository.data.RepositoryImpl
+import ru.profitsw2000.model.entities.DataModel
+import ru.profitsw2000.repository.data.local.DataSourceLocal
+import ru.profitsw2000.repository.data.web.ApiService
+import ru.profitsw2000.repository.data.web.DataSourceRemote
+import ru.profitsw2000.repository.domain.Repository
 import ru.profitsw2000.dictionarymvp.ui.history.HistoryViewModel
-import ru.profitsw2000.dictionarymvp.ui.main.MainInteractor
 import ru.profitsw2000.dictionarymvp.ui.main.MainViewModel
+import ru.profitsw2000.repository.room.HistoryDataBase
 
 val webModule = module {
     single<String>(named(URL)) { "https://dictionary.skyeng.ru/api/public/v1/" }
@@ -30,7 +29,7 @@ val webModule = module {
     single<DataSourceLocal>(named(NAME_LOCAL)) { DataSourceLocal(get(named("historyDAO"))) }
     single<Repository<List<DataModel>>>(named(NAME_REPO)) { RepositoryImpl(get(named(NAME_REMOTE)), get(named(NAME_LOCAL))) }
 
-    factory { MainInteractor(get(named(NAME_REPO))) }
+    factory { ru.profitsw2000.repository.MainInteractor(get(named(NAME_REPO))) }
     factory<Converter.Factory> { GsonConverterFactory.create() }
     factory { MainViewModel(get()) }
 }

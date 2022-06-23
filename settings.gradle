@@ -14,3 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DictionaryMVP"
 include ':app'
+include ':core'
+include ':model'
+include ':utils'
+include ':repository'

@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.profitsw2000.dictionarymvp.R
-import ru.profitsw2000.dictionarymvp.data.AppState
+import ru.profitsw2000.model.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityHistoryBinding
 import ru.profitsw2000.dictionarymvp.ui.history.adapter.HistoryAdapter
 
@@ -26,9 +26,9 @@ class HistoryActivity : AppCompatActivity() {
         historyViewModel.getData("",false)
     }
 
-    private fun renderData(appState: AppState) {
+    private fun renderData(appState: ru.profitsw2000.model.AppState) {
         when (appState) {
-            is AppState.Success -> {
+            is ru.profitsw2000.model.AppState.Success -> {
                 with(binding) {
                     historyRecyclerView.visibility = android.view.View.VISIBLE
                     progressLinearLayout.visibility = android.view.View.GONE
@@ -55,14 +55,14 @@ class HistoryActivity : AppCompatActivity() {
                     }
                 }
             }
-            is AppState.Loading -> {
+            is ru.profitsw2000.model.AppState.Loading -> {
                 with(binding) {
                     historyRecyclerView.visibility = android.view.View.GONE
                     errorMessage.visibility = android.view.View.GONE
                     progressLinearLayout.visibility = android.view.View.VISIBLE
                 }
             }
-            is AppState.Error -> {
+            is ru.profitsw2000.model.AppState.Error -> {
                 with(binding) {
                     historyRecyclerView.visibility = android.view.View.GONE
                     errorMessage.visibility = android.view.View.VISIBLE
