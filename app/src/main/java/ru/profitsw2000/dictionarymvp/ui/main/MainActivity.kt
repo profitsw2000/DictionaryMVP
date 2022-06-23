@@ -1,49 +1,50 @@
 package ru.profitsw2000.dictionarymvp.ui.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-=======
-import androidx.activity.viewModels
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
-import dagger.android.AndroidInjection
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
 import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.profitsw2000.dictionarymvp.data.entities.Meanings
+import ru.profitsw2000.dictionarymvp.ui.description.DescriptionActivity
+import ru.profitsw2000.dictionarymvp.ui.history.HistoryActivity
+import ru.profitsw2000.dictionarymvp.ui.history.dialog.SearchWordInHistoryDialog
+
+class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModel()
+    private lateinit var binding: ActivityMainBinding
+    private var adapter: TranslationAdapter? = null
+
+    private val onItemClickListener: TranslationAdapter.OnItemClickListener =
+        object : TranslationAdapter.OnItemClickListener {
+            override fun onItemClick(meanings: Meanings) {
+                val text = if (meanings.translation?.text.isNullOrEmpty()) "" else meanings.translation?.text
+                val note = if (meanings.translation?.note.isNullOrEmpty()) "" else meanings.translation?.note
+                val url = if (meanings.imageUrl.isNullOrEmpty()) "" else meanings.imageUrl
+
+                startActivity(text?.let {
+                    note?.let { it1 ->
+                        DescriptionActivity.getIntent(this@MainActivity, it, it1, url)
+                    }
+                })
+            }
+        }
+=======
 
 class MainActivity : AppCompatActivity() {
 
 
     private val viewModel: MainViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
-=======
-import javax.inject.Inject
-
-class MainActivity : AppCompatActivity() {
-
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var viewModel: MainViewModel
-
-    private lateinit var binding: ActivityMainBinding
-=======
-import android.os.Bundle
-import android.widget.Toast
-import ru.profitsw2000.dictionarymvp.R
-import ru.profitsw2000.dictionarymvp.data.AppState
-import ru.profitsw2000.dictionarymvp.data.entities.Meanings
-import ru.profitsw2000.dictionarymvp.data.entities.Translation
-import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
-import ru.profitsw2000.dictionarymvp.ui.base.View
-import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
-
-class MainActivity : AppCompatActivity(), View {
-
-    private lateinit var binding: ActivityMainBinding
-    private var presenter: MainPresenter? = null
-    private var adapter: TranslationAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +55,43 @@ class MainActivity : AppCompatActivity(), View {
         binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
             val word = binding.searchWordTranslationEditText.text.toString()
             viewModel.getData(word, true)
-=======
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            R.id.menu_search_word_in_history -> {
+                startSearchWordInHistoryDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun startSearchWordInHistoryDialog() {
+        val searchWordInHistoryDialog = SearchWordInHistoryDialog.newInstance()
+        searchWordInHistoryDialog.setOnSearchClickListener(onSearchClickListener)
+        searchWordInHistoryDialog.show(supportFragmentManager, "NewDialog")
+    }
+
+    private val onSearchClickListener: SearchWordInHistoryDialog.OnSearchClickListener =
+        object : SearchWordInHistoryDialog.OnSearchClickListener {
+            override fun onClick(searchWord: String) {
+                viewModel.getHistoryDataByWord(searchWord)
+                //Toast.makeText(this@MainActivity, searchWord, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun renderData(appState: AppState) {
         AndroidInjection.inject(this)
         viewModel = viewModelFactory.create(MainViewModel::class.java)
 
@@ -65,24 +102,7 @@ class MainActivity : AppCompatActivity(), View {
     }
 
     private fun renderData(appState: AppState) {
-=======
-=======
-        presenter = restorePresenter()
-        presenter?.onAttach(this)
 
-        binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
-            val word = binding.searchWordTranslationEditText.text.toString()
-
-            presenter?.getData(word, true)
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter?.onDetach(this)
-    }
-
-    override fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
                 with(binding) {
@@ -101,23 +121,14 @@ class MainActivity : AppCompatActivity(), View {
                     }
                 } else {
                     if(adapter == null){
-                        binding.translationRecyclerView.adapter = dataModel[0].meanings?.let {TranslationAdapter(it)}
+                        binding.translationRecyclerView.adapter = dataModel[0].meanings?.let {TranslationAdapter(it, onItemClickListener)}
                     } else {
                         dataModel[0].meanings?.let {
                             with(adapter) {
                                 this?.setData(it)
                             }
                         }
-=======
                         dataModel[0].meanings?.let { adapter!!.setData(it) }
-=======
-                        errorMessage.setText("Перевод введенного слова не найден")
-                    }
-                } else {
-                    if(adapter == null){
-                        binding.translationRecyclerView.adapter = TranslationAdapter(dataModel[0].meanings!!)
-                    } else {
-                        adapter!!.setData(dataModel[0].meanings!!)
                     }
                 }
             }
@@ -138,16 +149,5 @@ class MainActivity : AppCompatActivity(), View {
                 }
             }
         }
-    }
-=======
-=======
-
-    private fun restorePresenter(): MainPresenter {
-        val presenter = lastCustomNonConfigurationInstance as? MainPresenter
-        return presenter ?: MainPresenter()
-    }
-
-    override fun onRetainCustomNonConfigurationInstance(): Any? {
-        return presenter
     }
 }

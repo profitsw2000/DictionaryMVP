@@ -4,32 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MainActivity">
+    tools:context=".ui.history.HistoryActivity">
 
     <LinearLayout
-        android:id="@+id/success_linear_layout"
+        android:id="@+id/history_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="center">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/search_word_translation_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="custom"
-            android:layout_gravity="top|center_horizontal"
-            app:endIconDrawable="@drawable/icon_translate">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/search_word_translation_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/translation_recycler_view"
+            android:id="@+id/history_recycler_view"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +27,7 @@
             android:textSize="@dimen/error_message_text_size"
             android:layout_margin="@dimen/error_message_margin"
             android:visibility="gone"
-            android:text="Error"/>
+            android:text="@string/history_error_text_view_text"/>
 
     </LinearLayout>
 
@@ -62,5 +47,4 @@
             android:visibility="visible"/>
 
     </LinearLayout>
-
 </FrameLayout>

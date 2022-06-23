@@ -8,6 +8,10 @@
     <dimen name="error_message_margin">16dp</dimen>
     <dimen name="error_message_text_size">20sp</dimen>
     <dimen name="translate_icon_image_view_size">32dp</dimen>
-=======
-=======
+    <dimen name="refresh_layout_padding">4dp</dimen>
+    <dimen name="description_linear_layout_margin_top">8dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+
 </resources>

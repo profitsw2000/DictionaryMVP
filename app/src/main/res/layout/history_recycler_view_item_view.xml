@@ -18,7 +18,7 @@
             android:layout_marginStart="@dimen/main_recycler_view_item_margin_start"
             android:layout_marginTop="@dimen/main_recycler_view_item_outer_margin"
             android:layout_marginBottom="@dimen/main_recycler_view_item_inner_margin"
-            android:id="@+id/main_recycler_view_translation_text_view"
+            android:id="@+id/history_recycler_view_saved_word_text_view"
             android:textColor="@color/black"
             android:textSize="@dimen/header_text_view_size"
             tools:text="Text"
@@ -27,13 +27,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/main_recycler_view_note_text_view"
+            android:layout_marginStart="@dimen/main_recycler_view_item_margin_start"
+            android:layout_marginTop="@dimen/main_recycler_view_item_outer_margin"
+            android:layout_marginBottom="@dimen/main_recycler_view_item_inner_margin"
+            android:id="@+id/history_recycler_view_translation_text_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/header_text_view_size"
+            android:alpha="0.5"
+            tools:text="Text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/history_recycler_view_note_text_view"
             android:textColor="@color/design_default_color_primary_dark"
             android:textSize="@dimen/translation_text_view_size"
             android:layout_marginStart="@dimen/main_recycler_view_item_margin_start"
             android:layout_marginTop="@dimen/main_recycler_view_item_inner_margin"
             android:layout_marginBottom="@dimen/main_recycler_view_item_outer_margin"
-            android:alpha="0.6"
+            android:alpha="0.5"
             tools:text="Текст"
             />
     </LinearLayout>
@@ -43,6 +56,7 @@
         android:layout_height="match_parent"
         android:layout_weight="4"
         android:orientation="vertical">
+
         <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/translate_icon_image_view_size"
         android:layout_height="@dimen/translate_icon_image_view_size"
