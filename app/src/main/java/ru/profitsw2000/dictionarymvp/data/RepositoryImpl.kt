@@ -3,6 +3,9 @@ package ru.profitsw2000.dictionarymvp.data
 import ru.profitsw2000.dictionarymvp.data.entities.DataModel
 import ru.profitsw2000.dictionarymvp.data.local.DataSourceLocal
 import ru.profitsw2000.dictionarymvp.data.web.DataSourceRemote
+import ru.profitsw2000.dictionarymvp.data.entities.DataModel
+import ru.profitsw2000.dictionarymvp.data.local.DataSourceLocal
+import ru.profitsw2000.dictionarymvp.data.web.DataSourceRemote
 import ru.profitsw2000.dictionarymvp.domain.Repository
 
 class RepositoryImpl(

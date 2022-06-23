@@ -27,7 +27,9 @@ val webModule = module {
         .build() }
     single<ApiService> { get<Retrofit>().create(ApiService::class.java) }
     single<DataSourceRemote>(named(NAME_REMOTE)) { DataSourceRemote(get()) }
+
     single<DataSourceLocal>(named(NAME_LOCAL)) { DataSourceLocal(get()) }
+
     single<Repository<List<DataModel>>>(named(NAME_REPO)) { RepositoryImpl(get(named(NAME_REMOTE)), get(named(NAME_LOCAL))) }
 
     factory { MainInteractor(get(named(NAME_REPO))) }
@@ -35,8 +37,10 @@ val webModule = module {
     factory { MainViewModel(get()) }
 }
 
+
 val localdbModule = module {
     single { Room.databaseBuilder(get(), HistoryDataBase::class.java, "HistoryDB").build() }
     single { get<HistoryDataBase>().historyDao() }
     factory { HistoryViewModel(get()) }
+
 }

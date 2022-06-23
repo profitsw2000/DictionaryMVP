@@ -23,5 +23,5 @@ class DataSourceLocal(private val historyDao: HistoryDao) : DataSourceLocal<List
         convertDataModelToEntity(word, dataModel[0])?.let {
             historyDao.insert(it)
         }
-    }
+   }
 }

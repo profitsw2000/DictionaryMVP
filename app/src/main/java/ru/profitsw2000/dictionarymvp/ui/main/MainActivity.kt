@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
@@ -36,6 +38,13 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
+=======
+
+class MainActivity : AppCompatActivity() {
+
+
+    private val viewModel: MainViewModel by viewModel()
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +92,17 @@ class MainActivity : AppCompatActivity() {
         }
 
     private fun renderData(appState: AppState) {
+        AndroidInjection.inject(this)
+        viewModel = viewModelFactory.create(MainViewModel::class.java)
+
+        binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
+            val word = binding.searchWordTranslationEditText.text.toString()
+            viewModel.getData(word, true).observe(this@MainActivity) { renderData(it) }
+        }
+    }
+
+    private fun renderData(appState: AppState) {
+
         when (appState) {
             is AppState.Success -> {
                 with(binding) {
@@ -108,6 +128,7 @@ class MainActivity : AppCompatActivity() {
                                 this?.setData(it)
                             }
                         }
+                        dataModel[0].meanings?.let { adapter!!.setData(it) }
                     }
                 }
             }
