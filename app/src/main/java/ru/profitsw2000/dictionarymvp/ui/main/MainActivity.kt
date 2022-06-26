@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RestrictTo
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
@@ -64,9 +65,18 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
         viewModel.subscribe().observe(this@MainActivity) { renderData(it) }
 
         searchWordInputLayout.setEndIconOnClickListener {
-            val word = searchWordEditText.text.toString()
-            viewModel.getData(word, true)
+            startTranslationSearch()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startTranslationSearch()
+    }
+
+    private fun startTranslationSearch() {
+        val word = searchWordEditText.text.toString()
+        if (!word.isNullOrEmpty()) viewModel.getData(word, true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

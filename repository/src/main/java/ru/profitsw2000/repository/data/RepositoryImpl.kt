@@ -8,8 +8,8 @@ import ru.profitsw2000.repository.domain.Repository
 class RepositoryImpl(
     private val dataSourceRemote: DataSourceRemote,
     private val dataSourceLocal: DataSourceLocal
-)
-    : Repository<List<DataModel>> {
+) : Repository<List<DataModel>> {
+
     override suspend fun getData(word: String, remoteRepository: Boolean): List<DataModel> {
         val modelList: List<DataModel>
         if(remoteRepository) {
