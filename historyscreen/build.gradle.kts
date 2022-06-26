@@ -37,6 +37,7 @@ dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.model))
     implementation(project(Modules.repository))
+    implementation(project(Modules.utils))
 
     //Koin
     implementation(Koin.koin_core)

@@ -6,7 +6,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.annotation.RestrictTo
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.ext.android.inject
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.ScopeActivity
@@ -21,6 +26,7 @@ import ru.profitsw2000.dictionarymvp.ui.description.DescriptionActivity
 import ru.profitsw2000.historyscreen.HistoryActivity
 import ru.profitsw2000.dictionarymvp.ui.main.dialog.SearchWordInHistoryDialog
 import ru.profitsw2000.model.AppState
+import ru.profitsw2000.utils.ui.viewById
 
 class MainActivity : AppCompatActivity(), AndroidScopeComponent {
 
@@ -28,6 +34,13 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
     private val viewModel: MainViewModel by inject()
     private lateinit var binding: ActivityMainBinding
     private var adapter: TranslationAdapter? = null
+    //Views by delegate
+    private val errorMessageTextView by viewById<TextView>(R.id.error_message)
+    private val mainProgressBar by viewById<ProgressBar>(R.id.progress_bar)
+    private val mainActivityRecyclerview by viewById<RecyclerView>(R.id.translation_recycler_view)
+    private val searchWordInputLayout by viewById<TextInputLayout>(R.id.search_word_translation_input_layout)
+    private val searchWordEditText by viewById<TextInputEditText>(R.id.search_word_translation_edit_text)
+
 
     private val onItemClickListener: TranslationAdapter.OnItemClickListener =
         object : TranslationAdapter.OnItemClickListener {
@@ -50,8 +63,8 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
         setContentView(binding.root)
         viewModel.subscribe().observe(this@MainActivity) { renderData(it) }
 
-        binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
-            val word = binding.searchWordTranslationEditText.text.toString()
+        searchWordInputLayout.setEndIconOnClickListener {
+            val word = searchWordEditText.text.toString()
             viewModel.getData(word, true)
         }
     }
@@ -91,23 +104,20 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
-                with(binding) {
-                    translationRecyclerView.visibility = View.VISIBLE
-                    progressBar.visibility = View.GONE
-                    errorMessage.visibility = View.GONE
-                }
+                mainActivityRecyclerview.visibility = View.VISIBLE
+                mainProgressBar.visibility = View.GONE
+                errorMessageTextView.visibility = View.GONE
+
                 val dataModel = appState.data
                 if (dataModel == null || dataModel.isEmpty()) {
-                    with(binding) {
-                        translationRecyclerView.visibility = View.GONE
-                        errorMessage.visibility = View.VISIBLE
-                        progressBar.visibility = View.GONE
-                        errorMessage.setTextColor(resources.getColor(R.color.blue))
-                        errorMessage.setText(getString(R.string.no_translation_found_message_text))
-                    }
+                    mainActivityRecyclerview.visibility = View.GONE
+                    mainProgressBar.visibility = View.GONE
+                    errorMessageTextView.visibility = View.VISIBLE
+                    errorMessageTextView.setTextColor(resources.getColor(R.color.blue))
+                    errorMessageTextView.setText(getString(R.string.no_translation_found_message_text))
                 } else {
                     if(adapter == null){
-                        binding.translationRecyclerView.adapter = dataModel[0].meanings?.let {TranslationAdapter(it, onItemClickListener)}
+                        mainActivityRecyclerview.adapter = dataModel[0].meanings?.let {TranslationAdapter(it, onItemClickListener)}
                     } else {
                         dataModel[0].meanings?.let {
                             with(adapter) {
@@ -118,20 +128,16 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
                 }
             }
             is AppState.Loading -> {
-                with(binding) {
-                    translationRecyclerView.visibility = View.GONE
-                    errorMessage.visibility = View.GONE
-                    progressBar.visibility = View.VISIBLE
-                }
+                mainActivityRecyclerview.visibility = View.GONE
+                errorMessageTextView.visibility = View.GONE
+                mainProgressBar.visibility = View.VISIBLE
             }
             is AppState.Error -> {
-                with(binding) {
-                    translationRecyclerView.visibility = View.GONE
-                    errorMessage.visibility = View.VISIBLE
-                    progressBar.visibility = View.GONE
-                    errorMessage.setTextColor(resources.getColor(R.color.red))
-                    errorMessage.setText(appState.error.message)
-                }
+                mainActivityRecyclerview.visibility = View.GONE
+                errorMessageTextView.visibility = View.VISIBLE
+                mainProgressBar.visibility = View.GONE
+                errorMessageTextView.setTextColor(resources.getColor(R.color.red))
+                errorMessageTextView.setText(appState.error.message)
             }
         }
     }

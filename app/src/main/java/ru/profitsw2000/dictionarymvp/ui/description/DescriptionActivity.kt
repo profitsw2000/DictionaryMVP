@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.ImageLoader
 import coil.request.LoadRequest
 import coil.transform.CircleCropTransformation
@@ -20,10 +22,16 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import ru.profitsw2000.dictionarymvp.R
 import ru.profitsw2000.dictionarymvp.databinding.ActivityDescriptionBinding
+import ru.profitsw2000.utils.ui.viewById
 
 class DescriptionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDescriptionBinding
+    //Views by delegate
+    private val descriptionSwipeRefreshLayout by viewById<SwipeRefreshLayout>(R.id.description_screen_swipe_refresh_layout)
+    private val translationTextView by viewById<TextView>(R.id.translation_text_view)
+    private val noteTextView by viewById<TextView>(R.id.note_text_view)
+    private val descriptionImageView by viewById<ImageView>(R.id.description_image_view)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +39,7 @@ class DescriptionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setActionbarHomeButtonAsUp()
-        binding.descriptionScreenSwipeRefreshLayout.setOnRefreshListener { startLoadingOrShowError() }
+        descriptionSwipeRefreshLayout.setOnRefreshListener { startLoadingOrShowError() }
         setData()
     }
 
@@ -52,15 +60,15 @@ class DescriptionActivity : AppCompatActivity() {
 
     private fun setData() {
         val bundle = intent.extras
-        binding.translationTextView.text = bundle?.getString(WORD_EXTRA)
-        binding.noteTextView.text = bundle?.getString(DESCRIPTION_EXTRA)
+        translationTextView.text = bundle?.getString(WORD_EXTRA)
+        noteTextView.text = bundle?.getString(DESCRIPTION_EXTRA)
         val imageLink = bundle?.getString(URL_EXTRA)
         if (imageLink.isNullOrBlank()) {
             stopRefreshAnimationIfNeeded()
         } else {
             //usePicassoToLoadPhoto(binding.descriptionImageView, imageLink)
             //useGlideToLoadPhoto(binding.descriptionImageView, imageLink)
-            useCoilToLoadPhoto(binding.descriptionImageView, imageLink)
+            useCoilToLoadPhoto(descriptionImageView, imageLink)
         }
     }
 
@@ -69,8 +77,8 @@ class DescriptionActivity : AppCompatActivity() {
     }
 
     private fun stopRefreshAnimationIfNeeded() {
-        if (binding.descriptionScreenSwipeRefreshLayout.isRefreshing) {
-            binding.descriptionScreenSwipeRefreshLayout.isRefreshing = false
+        if (descriptionSwipeRefreshLayout.isRefreshing) {
+            descriptionSwipeRefreshLayout.isRefreshing = false
         }
     }
 
