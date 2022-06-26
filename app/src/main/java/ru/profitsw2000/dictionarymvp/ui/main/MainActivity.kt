@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RestrictTo
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.ext.android.inject
@@ -27,6 +29,7 @@ import ru.profitsw2000.dictionarymvp.ui.description.DescriptionActivity
 import ru.profitsw2000.historyscreen.HistoryActivity
 import ru.profitsw2000.dictionarymvp.ui.main.dialog.SearchWordInHistoryDialog
 import ru.profitsw2000.model.AppState
+import ru.profitsw2000.utils.ui.OnlineLiveData
 import ru.profitsw2000.utils.ui.viewById
 
 class MainActivity : AppCompatActivity(), AndroidScopeComponent {
@@ -35,13 +38,16 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
     private val viewModel: MainViewModel by inject()
     private lateinit var binding: ActivityMainBinding
     private var adapter: TranslationAdapter? = null
+    protected var isNetworkAvailable: Boolean = true
     //Views by delegate
     private val errorMessageTextView by viewById<TextView>(R.id.error_message)
     private val mainProgressBar by viewById<ProgressBar>(R.id.progress_bar)
     private val mainActivityRecyclerview by viewById<RecyclerView>(R.id.translation_recycler_view)
     private val searchWordInputLayout by viewById<TextInputLayout>(R.id.search_word_translation_input_layout)
     private val searchWordEditText by viewById<TextInputEditText>(R.id.search_word_translation_edit_text)
-
+    private val mainActivityFrameLayout by viewById<FrameLayout>(R.id.main_activity_frame_layout)
+    //SnackBar
+    private var snackbar: Snackbar? = null
 
     private val onItemClickListener: TranslationAdapter.OnItemClickListener =
         object : TranslationAdapter.OnItemClickListener {
@@ -62,6 +68,10 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        snackbar = Snackbar.make(mainActivityFrameLayout, getString(R.string.internet_offline_message_text),Snackbar.LENGTH_INDEFINITE)
+
+        subscribeToNetworkChange()
         viewModel.subscribe().observe(this@MainActivity) { renderData(it) }
 
         searchWordInputLayout.setEndIconOnClickListener {
@@ -149,6 +159,22 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
                 errorMessageTextView.setTextColor(resources.getColor(R.color.red))
                 errorMessageTextView.setText(appState.error.message)
             }
+        }
+    }
+
+    private fun subscribeToNetworkChange() {
+        OnlineLiveData(this).observe(
+            this@MainActivity,
+            checkNetwork()
+        )
+    }
+
+    private fun checkNetwork(): (t: Boolean) -> Unit = {
+        isNetworkAvailable = it
+        if (!isNetworkAvailable) {
+            snackbar?.show()
+        } else {
+            snackbar?.dismiss()
         }
     }
 

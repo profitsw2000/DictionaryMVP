@@ -2,9 +2,12 @@ package ru.profitsw2000.historyscreen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.activityScope
@@ -13,6 +16,7 @@ import org.koin.core.scope.Scope
 import ru.profitsw2000.historyscreen.adapter.HistoryAdapter
 import ru.profitsw2000.historyscreen.databinding.ActivityHistoryBinding
 import ru.profitsw2000.model.AppState
+import ru.profitsw2000.utils.ui.OnlineLiveData
 import ru.profitsw2000.utils.ui.viewById
 
 class HistoryActivity : AppCompatActivity(), AndroidScopeComponent {
@@ -21,15 +25,18 @@ class HistoryActivity : AppCompatActivity(), AndroidScopeComponent {
     private lateinit var binding: ActivityHistoryBinding
     private val historyViewModel: HistoryViewModel by inject()
     private var adapter: HistoryAdapter? = null
+    protected var isNetworkAvailable: Boolean = true
     //Views by delegate
     private val historyActivityRecyclerView by viewById<RecyclerView>(R.id.history_recycler_view)
     private val progressBarLinearLayout by viewById<LinearLayout>(R.id.progress_linear_layout)
     private val errorMessageTextView by viewById<TextView>(R.id.error_message)
+    private val historyActivityFrameLayout by viewById<FrameLayout>(R.id.history_activity_frame_layout)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         historyViewModel.subscribe().observe(this@HistoryActivity) { renderData(it) }
     }
 
