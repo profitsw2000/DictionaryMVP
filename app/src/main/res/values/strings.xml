@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DictionaryMVP</string>
+    <string name="no_translation_found_message_text">Перевод введенного слова не найден</string>
+    <string name="history_error_text_view_text">Error</string>
+    <string name="empty_history_message_text">История поиска пуста.</string>
+    <string name="internet_offline_message_text">Internet is offline</string>
 </resources>
