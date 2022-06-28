@@ -1,6 +1,9 @@
 package ru.profitsw2000.dictionarymvp.ui.main
 
 import android.content.Intent
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -112,6 +115,10 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
     }
 
     private fun startSearchWordInHistoryDialog() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            setRenderEffect(15f,15f)
+        }
+
         val searchWordInHistoryDialog = SearchWordInHistoryDialog.newInstance()
         searchWordInHistoryDialog.setOnSearchClickListener(onSearchClickListener)
         searchWordInHistoryDialog.show(supportFragmentManager, "NewDialog")
@@ -121,6 +128,9 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
         object : SearchWordInHistoryDialog.OnSearchClickListener {
             override fun onClick(searchWord: String) {
                 viewModel.getHistoryDataByWord(searchWord)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    setRenderEffect(1f,1f)
+                }
             }
         }
 
@@ -179,6 +189,11 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
         } else {
             snackbar?.dismiss()
         }
+    }
+
+    private fun setRenderEffect(radiusX: Float, radiusY: Float) {
+        var blurEffect = RenderEffect.createBlurEffect(radiusX, radiusY, Shader.TileMode.MIRROR)
+        binding.mainActivityFrameLayout.setRenderEffect(blurEffect)
     }
 
 }
