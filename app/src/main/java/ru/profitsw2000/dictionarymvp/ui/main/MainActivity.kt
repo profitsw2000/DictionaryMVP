@@ -80,9 +80,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
     private fun renderData(appState: ru.profitsw2000.model.AppState) {
         when (appState) {
             is ru.profitsw2000.model.AppState.Success -> {
+
                 with(binding) {
                     translationRecyclerView.visibility = android.view.View.VISIBLE
                     progressBar.visibility = android.view.View.GONE
@@ -110,6 +112,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             is ru.profitsw2000.model.AppState.Loading -> {
+
                 with(binding) {
                     translationRecyclerView.visibility = android.view.View.GONE
                     errorMessage.visibility = android.view.View.GONE
@@ -117,6 +120,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             is ru.profitsw2000.model.AppState.Error -> {
+
                 with(binding) {
                     translationRecyclerView.visibility = android.view.View.GONE
                     errorMessage.visibility = android.view.View.VISIBLE
