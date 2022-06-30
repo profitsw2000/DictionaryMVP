@@ -18,4 +18,5 @@ class App : Application() {
             modules(listOf(webModule, localdbModule))
         }
     }
-}    
+}
+

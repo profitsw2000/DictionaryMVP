@@ -3,11 +3,9 @@ package ru.profitsw2000.dictionarymvp.ui.main.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
-import ru.profitsw2000.dictionarymvp.data.entities.Meanings
+import ru.profitsw2000.model.entities.Meanings
 import ru.profitsw2000.dictionarymvp.databinding.MainRecyclerViewItemViewBinding
-
 
 class TranslationAdapter (private var data: List<Meanings>,
                         private var onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<TranslationAdapter.ViewHolder>() {

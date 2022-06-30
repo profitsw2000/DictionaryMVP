@@ -5,18 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import ru.profitsw2000.dictionarymvp.R
-import ru.profitsw2000.dictionarymvp.data.AppState
 import ru.profitsw2000.dictionarymvp.databinding.ActivityMainBinding
 import ru.profitsw2000.dictionarymvp.ui.main.adapter.TranslationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.profitsw2000.dictionarymvp.data.entities.Meanings
+import ru.profitsw2000.model.entities.Meanings
 import ru.profitsw2000.dictionarymvp.ui.description.DescriptionActivity
-import ru.profitsw2000.dictionarymvp.ui.history.HistoryActivity
-import ru.profitsw2000.dictionarymvp.ui.history.dialog.SearchWordInHistoryDialog
+import ru.profitsw2000.historyscreen.HistoryActivity
+import ru.profitsw2000.dictionarymvp.ui.main.dialog.SearchWordInHistoryDialog
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,13 +34,6 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
-=======
-
-class MainActivity : AppCompatActivity() {
-
-
-    private val viewModel: MainViewModel by viewModel()
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_history -> {
-                startActivity(Intent(this, HistoryActivity::class.java))
+                startActivity(Intent(this, ru.profitsw2000.historyscreen.HistoryActivity::class.java))
                 true
             }
             R.id.menu_search_word_in_history -> {
@@ -91,20 +80,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    private fun renderData(appState: AppState) {
-        AndroidInjection.inject(this)
-        viewModel = viewModelFactory.create(MainViewModel::class.java)
 
-        binding.searchWordTranslationInputLayout.setEndIconOnClickListener {
-            val word = binding.searchWordTranslationEditText.text.toString()
-            viewModel.getData(word, true).observe(this@MainActivity) { renderData(it) }
-        }
-    }
-
-    private fun renderData(appState: AppState) {
-
+    private fun renderData(appState: ru.profitsw2000.model.AppState) {
         when (appState) {
-            is AppState.Success -> {
+            is ru.profitsw2000.model.AppState.Success -> {
+
                 with(binding) {
                     translationRecyclerView.visibility = android.view.View.VISIBLE
                     progressBar.visibility = android.view.View.GONE
@@ -128,18 +108,19 @@ class MainActivity : AppCompatActivity() {
                                 this?.setData(it)
                             }
                         }
-                        dataModel[0].meanings?.let { adapter!!.setData(it) }
                     }
                 }
             }
-            is AppState.Loading -> {
+            is ru.profitsw2000.model.AppState.Loading -> {
+
                 with(binding) {
                     translationRecyclerView.visibility = android.view.View.GONE
                     errorMessage.visibility = android.view.View.GONE
                     progressBar.visibility = android.view.View.VISIBLE
                 }
             }
-            is AppState.Error -> {
+            is ru.profitsw2000.model.AppState.Error -> {
+
                 with(binding) {
                     translationRecyclerView.visibility = android.view.View.GONE
                     errorMessage.visibility = android.view.View.VISIBLE

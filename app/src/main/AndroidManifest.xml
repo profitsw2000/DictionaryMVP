@@ -5,7 +5,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -19,7 +18,7 @@
         android:name=".App"
         tools:targetApi="31">
         <activity
-            android:name=".ui.history.HistoryActivity"
+            android:name="ru.profitsw2000.historyscreen.HistoryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.description.DescriptionActivity"
